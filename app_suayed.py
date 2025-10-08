@@ -43,11 +43,22 @@ with col2:
 def load_models():
     """Precarga ambos modelos en CPU solo una vez."""
     start = time.time()
-    st.info("⏳ Cargando modelos, por favor espera... (~20-59 seg. la primera vez)")
+
+    # Placeholder temporal (mensaje de carga)
+    status = st.empty()
+    status.info("⏳ Cargando modelos, por favor espera... (~20–59 seg. la primera vez)")
+
+    # Carga de modelos
     instructor = SentenceTransformer("hkunlp/instructor-large", device="cpu")
     distiluse = SentenceTransformer("distiluse-base-multilingual-cased-v2", device="cpu")
+
     elapsed = time.time() - start
-    st.success(f"Modelos cargados en {elapsed:.1f} segundos.")
+
+    # Reemplaza el mensaje anterior con el de éxito
+    status.success(f"✅ Modelos cargados en {elapsed:.1f} segundos.")
+    time.sleep(2)  # Pausa breve para que el usuario lo vea
+    status.empty()  # Limpia el mensaje de la interfaz
+
     return instructor, distiluse
 
 instructor_model, distiluse_model = load_models()
@@ -155,5 +166,6 @@ with col2:
         )
 
         st.altair_chart(chart, use_container_width=True)
+
 
 
