@@ -6,6 +6,7 @@
 **Versión:** 1.0  
 **Licencia:** MIT  
 **App disponible en:** https://suayed-buscador-semantico.streamlit.app/
+
 ---
 
 ## Descripción general
