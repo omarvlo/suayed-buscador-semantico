@@ -3,6 +3,7 @@
 **Autor:** Omar Velázquez López  
 **Proyecto de investigación:** *Modelos de lenguaje masivos de código abierto para la búsqueda y el fortalecimiento del aprendizaje en el SUAyED*  
 **Institución:** Universidad Nacional Autónoma de México (UNAM)
+
 **App disponible en:** https://suayed-buscador-semantico.streamlit.app/
 **Versión:** 1.0  
 **Licencia:** MIT  
