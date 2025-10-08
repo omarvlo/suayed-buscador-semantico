@@ -44,7 +44,7 @@ def load_models():
     """Precarga ambos modelos en CPU solo una vez."""
     start = time.time()
 
-    # Placeholder temporal (mensaje de carga)
+    # Placeholder temporal para mensajes dinámicos
     status = st.empty()
     status.info("⏳ Cargando modelos, por favor espera... (~20–59 seg. la primera vez)")
 
@@ -54,10 +54,8 @@ def load_models():
 
     elapsed = time.time() - start
 
-    # Reemplaza el mensaje anterior con el de éxito
+    # Reemplaza el mensaje de carga por el de éxito
     status.success(f"✅ Modelos cargados en {elapsed:.1f} segundos.")
-    time.sleep(2)  # Pausa breve para que el usuario lo vea
-    status.empty()  # Limpia el mensaje de la interfaz
 
     return instructor, distiluse
 
@@ -166,6 +164,7 @@ with col2:
         )
 
         st.altair_chart(chart, use_container_width=True)
+
 
 
 
