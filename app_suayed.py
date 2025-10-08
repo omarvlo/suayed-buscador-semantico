@@ -20,7 +20,7 @@ with col1:
     st.title("🔍 Buscador Semántico de Corpus Académico")
     st.markdown(
         "Este prototipo permite la exploración de un corpus de *SciELO México* de hasta **1000 artículos**"
-        "utilizando **similitud semántica** basada en embeddings de los modelos masivos de lenguaje de código abierto."
+        " utilizando **similitud semántica** basada en embeddings de los modelos masivos de lenguaje de código abierto."
     )
     st.write("Selecciona un modo de búsqueda, escribe tu consulta y explora los resultados.")
 
@@ -45,13 +45,13 @@ def load_models():
     #start = time.time()
     # Placeholder temporal para mensajes dinámicos
     #status = st.empty()
-    status.info("⏳ Cargando modelos, por favor espera... (~20–50 seg. la primera vez)")
+    #status.info("⏳ Cargando modelos, por favor espera... (~20–50 seg. la primera vez)")
     # Carga de modelos
     instructor = SentenceTransformer("hkunlp/instructor-large", device="cpu")
     distiluse = SentenceTransformer("distiluse-base-multilingual-cased-v2", device="cpu")
     #elapsed = time.time() - start
     # Reemplaza el mensaje de carga por el de éxito
-    #status.success(f"✅ Modelos cargados en {elapsed:.1f} segundos.")
+    #status.success(f"Modelos cargados en {elapsed:.1f} segundos.")
     return instructor, distiluse
 
 instructor_model, distiluse_model = load_models()
@@ -74,7 +74,7 @@ df, emb_instructor, emb_distiluse = load_corpus()
 # --- Selector de modo ---
 modo = st.selectbox(
     "Selecciona el modo de búsqueda:",
-    ["Profundidad (Instructor)", "Relevancia (Distiluse)"]
+    ["Relevancia (Distiluse)","Profundidad (Instructor)"]
 )
 # =========================================================
 # DISEÑO EN DOS COLUMNAS
@@ -84,14 +84,16 @@ col1, col2 = st.columns([3, 1])  # [izquierda, derecha] -> puedes ajustar propor
 # --- Columna derecha: búsqueda y resultados ---
 with col1:
     # --- Caja de texto ---
-    query = st.text_input("Escribe tu consulta:")
+    query = st.text_input("Escribe tu consulta:",key="query_input")
+    # --- Botón o Enter ---
+    buscar = st.button("🔍 Ejecutar búsqueda")  # devuelve True al hacer clic
 
     # --- Botón para buscar ---
-    if st.button("🔍 Ejecutar búsqueda") and query.strip():
+    if (buscar or query.strip()) and len(query.strip()) > 0:
         st.info(f"Ejecutando búsqueda con modo **{modo}**...")
 
         if "Instructor" in modo:
-            model = SentenceTransformer("hkunlp/instructor-base")
+            model = SentenceTransformer("hkunlp/instructor-large")
             instruction = "Representa este texto en español para comparar su contenido temático con otros artículos académicos sobre"
             q_vec = model.encode([[instruction, query]])
             emb_matrix = emb_instructor
@@ -110,7 +112,7 @@ with col1:
             st.markdown(f"**{i+1}. {row['Título']}**")
             st.caption(f"👤 {row['Autor']} | 📅 {row['Fecha']}")
             st.write(
-                row["Resumen: "][:400] + "..."
+                row["Resumen"][:500] + "..."
                 if len(row["Resumen"]) > 400
                 else row["Resumen"]
             )
@@ -158,7 +160,6 @@ with col2:
         )
 
         st.altair_chart(chart, use_container_width=True)
-
 
 
 
