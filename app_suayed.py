@@ -91,7 +91,7 @@ with col1:
         st.info(f"Ejecutando búsqueda con modo **{modo}**...")
 
         if "Instructor" in modo:
-            model = SentenceTransformer("hkunlp/instructor-large")
+            model = SentenceTransformer("hkunlp/instructor-base")
             instruction = "Representa este texto en español para comparar su contenido temático con otros artículos académicos sobre"
             q_vec = model.encode([[instruction, query]])
             emb_matrix = emb_instructor
@@ -158,6 +158,7 @@ with col2:
         )
 
         st.altair_chart(chart, use_container_width=True)
+
 
 
 
