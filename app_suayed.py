@@ -90,7 +90,7 @@ col1, col2 = st.columns([3, 1])  # [izquierda, derecha] -> puedes ajustar propor
 # --- Columna derecha: búsqueda y resultados ---
 with col1:
     # --- Caja de texto ---
-    query = st.text_input("Escribe tu consulta:", "inteligencia artificial en el aprendizaje")
+    query = st.text_input("Escribe tu consulta:")
 
     # --- Botón para buscar ---
     if st.button("🔍 Ejecutar búsqueda") and query.strip():
@@ -164,6 +164,7 @@ with col2:
         )
 
         st.altair_chart(chart, use_container_width=True)
+
 
 
 
