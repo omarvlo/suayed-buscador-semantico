@@ -42,21 +42,16 @@ with col2:
 @st.cache_resource(show_spinner=False)
 def load_models():
     """Precarga ambos modelos en CPU solo una vez."""
-    start = time.time()
-
+    #start = time.time()
     # Placeholder temporal para mensajes dinámicos
-    status = st.empty()
-    status.info("⏳ Cargando modelos, por favor espera... (~20–59 seg. la primera vez)")
-
+    #status = st.empty()
+    3status.info("⏳ Cargando modelos, por favor espera... (~20–50 seg. la primera vez)")
     # Carga de modelos
     instructor = SentenceTransformer("hkunlp/instructor-large", device="cpu")
     distiluse = SentenceTransformer("distiluse-base-multilingual-cased-v2", device="cpu")
-
-    elapsed = time.time() - start
-
+    #elapsed = time.time() - start
     # Reemplaza el mensaje de carga por el de éxito
-    status.success(f"✅ Modelos cargados en {elapsed:.1f} segundos.")
-
+    #status.success(f"✅ Modelos cargados en {elapsed:.1f} segundos.")
     return instructor, distiluse
 
 instructor_model, distiluse_model = load_models()
@@ -79,13 +74,12 @@ df, emb_instructor, emb_distiluse = load_corpus()
 # --- Selector de modo ---
 modo = st.selectbox(
     "Selecciona el modo de búsqueda:",
-    ["Profundidad (Instructor)", "Relevancia y velocidad (Distiluse)"]
+    ["Profundidad (Instructor)", "Relevancia (Distiluse)"]
 )
 # =========================================================
 # DISEÑO EN DOS COLUMNAS
 # =========================================================
 col1, col2 = st.columns([3, 1])  # [izquierda, derecha] -> puedes ajustar proporciones
-
 
 # --- Columna derecha: búsqueda y resultados ---
 with col1:
@@ -116,7 +110,7 @@ with col1:
             st.markdown(f"**{i+1}. {row['Título']}**")
             st.caption(f"👤 {row['Autor']} | 📅 {row['Fecha']}")
             st.write(
-                row["Resumen"][:400] + "..."
+                row["Resumen: "][:400] + "..."
                 if len(row["Resumen"]) > 400
                 else row["Resumen"]
             )
@@ -164,6 +158,7 @@ with col2:
         )
 
         st.altair_chart(chart, use_container_width=True)
+
 
 
 
