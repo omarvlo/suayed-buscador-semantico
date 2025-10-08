@@ -45,7 +45,7 @@ def load_models():
     #start = time.time()
     # Placeholder temporal para mensajes dinámicos
     #status = st.empty()
-    3status.info("⏳ Cargando modelos, por favor espera... (~20–50 seg. la primera vez)")
+    status.info("⏳ Cargando modelos, por favor espera... (~20–50 seg. la primera vez)")
     # Carga de modelos
     instructor = SentenceTransformer("hkunlp/instructor-large", device="cpu")
     distiluse = SentenceTransformer("distiluse-base-multilingual-cased-v2", device="cpu")
@@ -158,6 +158,7 @@ with col2:
         )
 
         st.altair_chart(chart, use_container_width=True)
+
 
 
 
